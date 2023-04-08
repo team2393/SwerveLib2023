@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 /** OI for serving */
 public class SwerveOI
 {
+  /** Alternate stick assignment? */
+  private static final boolean ALTERNATE = true;
+
   public static final CommandXboxController joystick = new CommandXboxController(0);
 
   private static double filter(double value)
@@ -21,17 +24,17 @@ public class SwerveOI
 
   public static double getForwardSpeed()
   {
-    return SwerveDrivetrain.MAX_METERS_PER_SEC * filter(-joystick.getRightY());
+    return SwerveDrivetrain.MAX_METERS_PER_SEC * filter(ALTERNATE ? -joystick.getRightY() : -joystick.getLeftY());
   }
 
   public static double getLeftSpeed()
   {
-    return SwerveDrivetrain.MAX_METERS_PER_SEC * filter(-joystick.getRightX());
+    return SwerveDrivetrain.MAX_METERS_PER_SEC * filter(ALTERNATE ? -joystick.getRightX() : -joystick.getLeftX());
   }
 
   public static double getRotationSpeed()
   {
-    return SwerveDrivetrain.MAX_ROTATION_DEG_PER_SEC * filter(-joystick.getLeftX());
+    return SwerveDrivetrain.MAX_ROTATION_DEG_PER_SEC * filter(ALTERNATE ? -joystick.getLeftX() : -joystick.getRightX());
   }
 
   public static Trigger reset()

@@ -56,6 +56,9 @@ public class AbsoluteSwerveCommand extends CommandBase
     Rotation2d correction = drivetrain.getHeading().unaryMinus();
     Translation2d absoluteDirection = new Translation2d(vx, vy).rotateBy(correction);
 
+    // ^^^ correct the correction by fraction of angular speed,
+    // https://www.chiefdelphi.com/t/field-relative-swervedrive-drift-even-with-simulated-perfect-modules
+
     // Swerve robot in 'absoluteDirection', while rotating as requested
     double vr = SwerveOI.getRotationSpeed();
     drivetrain.swerve(absoluteDirection.getX(), absoluteDirection.getY(), vr, SwerveDrivetrain.CENTER);

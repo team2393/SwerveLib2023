@@ -22,7 +22,7 @@ public class SwerveToPositionCommand extends CommandBase
 
   private final SwerveDrivetrain drivetrain;
   private final double x, y;
-  private double last_speed, distance;
+  private double last_speed, distance, angle;
 
   /** @param drivetrain
    *  @param x Desired X position
@@ -41,19 +41,28 @@ public class SwerveToPositionCommand extends CommandBase
   {
     last_speed = 0.0;
     distance = 20.0;
+    angle = 0.0;
   }
 
+  // We generally rely on the trajectory tools to follow arbitrary paths.
+  // In this case, 'initialize' could create a simple 2-point trajectory
+  // from drivetrain.getPose() to the desired (x, y) and then
+  // launch a drivetrain.createTrajectoryCommand(...).
+  // However, such a trajectory computation fails when the distance
+  // between the points is too small (~10 cm), and we want to support
+  // even small moves with this command.
   public void execute()
   {
+    // Compute direct line from where we are right now to the desired location
     Pose2d pose = drivetrain.getPose();
     double dx = x - pose.getX();
     double dy = y - pose.getY();
     
-    // Direct heading to the desired location
-    double angle = Math.toDegrees(Math.atan2(dy, dx)) - drivetrain.getHeading().getDegrees();
+    // Distance, angle relative to the current robot heading
+    distance = Math.hypot(dx, dy);
+    angle = Math.toDegrees(Math.atan2(dy, dx)) - pose.getRotation().getDegrees();
 
     // Proportional control of speed based on distance
-    distance = Math.hypot(dx, dy);
     double speed = Math.min(MAX_SPEED, P*distance);
 
     // Limit acceleration
@@ -69,5 +78,11 @@ public class SwerveToPositionCommand extends CommandBase
   {
     // Within 5 cm?
     return distance < 0.05;
+  }
+
+  @Override
+  public void end(boolean interrupted)
+  {
+    drivetrain.drive(angle, 0.0);
   }
 }

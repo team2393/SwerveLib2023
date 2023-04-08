@@ -3,19 +3,18 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.swervebot;
 
-import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
+import frc.AutoNoMouse;
 import frc.CommandRobotBase;
 import frc.swervelib.AbsoluteSwerveCommand;
 import frc.swervelib.RelativeSwerveCommand;
 import frc.swervelib.ResetPositionCommand;
 import frc.swervelib.SwerveOI;
-import frc.swervelib.SwerveToPositionCommand;
 
 /** ServeBot */
 public class SwerveBotRobot extends CommandRobotBase
@@ -33,16 +32,17 @@ public class SwerveBotRobot extends CommandRobotBase
     super.robotInit();
 
     autos.setDefaultOption("Nothing", new PrintCommand("Doing nothing"));
-    // for (Command auto : AutoNoMouse.createAutoCommands(drivetrain, null))
-    //   autos.addOption(auto.getName(), auto);
-
-    autos.addOption("4,4 <-> 9,3",
-                    new SwerveToPositionCommand(drivetrain, 4, 4)
-                    .andThen(new SwerveToPositionCommand(drivetrain, 9, 3)));
+    for (Command auto : AutoNoMouse.createAutoCommands(drivetrain))
+      autos.addOption(auto.getName(), auto);
     SmartDashboard.putData("Auto Options", autos);
-
   }
   
+  @Override
+  public void disabledPeriodic()
+  {
+    AutoNoMouse.indicateStart(drivetrain, autos.getSelected());
+  }
+
   @Override
   public void teleopInit()
   {
