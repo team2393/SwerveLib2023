@@ -17,8 +17,8 @@ public class SwervebotDrivetrain extends SwerveDrivetrain
 
   public SwervebotDrivetrain()
   {
-    super(0.64135,
-          0.61595,
+    super(0.393,
+          0.416,
           new SwerveModule[]
           {
             new SwerveModule(new Rotator(0,  -16), new Driver(0)),

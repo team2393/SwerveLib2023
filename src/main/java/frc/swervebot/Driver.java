@@ -15,6 +15,7 @@ public class Driver extends DriverBase
 
   private final WPI_TalonFX motor;
 
+  /** @param index Driver index 0..3 */
   public Driver(int index)
   {
     super(index, 0.5, 2.24, 0, 0.4, 0.1);

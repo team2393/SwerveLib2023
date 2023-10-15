@@ -13,6 +13,7 @@ public final class Main
     // RobotBase.startRobot(SwerveRob::new);
     // RobotBase.startRobot(() -> new frc.swervelib.RotatatorDemoRobot(new frc.swervebot.Rotator;Rotator(0, 0.0)));
     // RobotBase.startRobot(() -> new frc.swervelib.DriverDemoRobot(new frc.swervebot.Driver(0)));
+    // RobotBase.startRobot(frc.swervebot.SwerveModuleDemoRobot::new);
 
     RobotBase.startRobot(frc.swervebot.SwerveBotRobot::new);
   }

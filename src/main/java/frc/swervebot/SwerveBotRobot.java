@@ -14,6 +14,7 @@ import frc.CommandRobotBase;
 import frc.swervelib.AbsoluteSwerveCommand;
 import frc.swervelib.RelativeSwerveCommand;
 import frc.swervelib.ResetPositionCommand;
+import frc.swervelib.SwerveDrivetrain;
 import frc.swervelib.SwerveOI;
 
 /** ServeBot */
@@ -30,6 +31,8 @@ public class SwerveBotRobot extends CommandRobotBase
   public void robotInit()
   {
     super.robotInit();
+
+    SwerveDrivetrain.MAX_METERS_PER_SEC = 0.5;
 
     autos.setDefaultOption("Nothing", new PrintCommand("Doing nothing"));
     for (Command auto : AutoNoMouse.createAutoCommands(drivetrain))
