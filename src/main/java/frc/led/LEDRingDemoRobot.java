@@ -1,7 +1,6 @@
 package frc.led;
 
-import edu.wpi.first.wpilibj.AddressableLED;
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.util.Color;
 import frc.CommandRobotBase;
 
 public class LEDRingDemoRobot extends CommandRobotBase
@@ -12,6 +11,7 @@ public class LEDRingDemoRobot extends CommandRobotBase
   public void robotInit()
   {
     super.robotInit();
-    ring.setDefaultCommand(new Comet(ring));
+    // ring.setDefaultCommand(new Comet(ring));
+    ring.setDefaultCommand(new ColorPair(ring, Color.kDarkGreen, Color.kDarkGoldenrod));
   }
 }

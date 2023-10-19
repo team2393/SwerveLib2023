@@ -27,7 +27,7 @@ public class Comet extends CommandBase
     int active = (int) ((System.currentTimeMillis()  / 50) % LEDRing.N);
 
     // Active LED: Purple
-    ring.buffer.setRGB(active, 255, 0, 255);
+    ring.buffer.setRGB(active, 255, 100, 255);
 
     // Half of the LEDs before active one: dimming variant of blue
     for (int i=1; i<LEDRing.N/2; ++i)
